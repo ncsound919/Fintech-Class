@@ -31,6 +31,13 @@ export interface VisualStep {
   detail: string;
 }
 
+export interface ResourceLink {
+  title: string;
+  url: string;
+  description: string;
+  category: 'account' | 'literacy' | 'tool' | 'resource';
+}
+
 export interface LessonContent {
   id: string;
   title: string;
@@ -56,6 +63,7 @@ export interface Module {
   lessons: LessonContent[];
   xpReward?: number;
   estimatedMinutes?: number;
+  resourceLinks?: ResourceLink[];
 }
 
 export const courseModules: Module[] = [
@@ -71,6 +79,32 @@ export const courseModules: Module[] = [
     color: 'bg-gradient-to-r from-violet-500 to-indigo-500',
     xpReward: 50,
     estimatedMinutes: 10,
+    resourceLinks: [
+      {
+        title: 'Khan Academy Personal Finance',
+        url: 'https://www.khanacademy.org/college-careers-more/personal-finance',
+        description: 'Free courses on budgeting, saving, and financial decision-making.',
+        category: 'literacy'
+      },
+      {
+        title: 'Investopedia Financial Terms',
+        url: 'https://www.investopedia.com/financial-term-dictionary-4769738',
+        description: 'Comprehensive dictionary of financial and investing terms.',
+        category: 'literacy'
+      },
+      {
+        title: 'CFPB Financial Toolkit',
+        url: 'https://www.consumerfinance.gov/consumer-tools/',
+        description: 'Government resources for managing money and understanding financial products.',
+        category: 'literacy'
+      },
+      {
+        title: 'NerdWallet Financial Tools',
+        url: 'https://www.nerdwallet.com/',
+        description: 'Compare financial products and get personalized recommendations.',
+        category: 'tool'
+      }
+    ],
     lessons: [
       {
         id: 'onboarding-1',
@@ -149,6 +183,26 @@ export const courseModules: Module[] = [
     color: 'bg-blue-600',
     xpReward: 100,
     estimatedMinutes: 20,
+    resourceLinks: [
+      {
+        title: 'Open a Coinbase Account',
+        url: 'https://www.coinbase.com/signup',
+        description: 'Start your crypto journey with Coinbase - a beginner-friendly platform to buy, sell, and store cryptocurrency.',
+        category: 'account'
+      },
+      {
+        title: 'Coinbase Learn & Earn',
+        url: 'https://www.coinbase.com/learn',
+        description: 'Learn about crypto and earn free cryptocurrency while you learn.',
+        category: 'literacy'
+      },
+      {
+        title: 'Base Network Documentation',
+        url: 'https://docs.base.org/',
+        description: 'Explore Base, Coinbase\'s Layer 2 network built on Ethereum.',
+        category: 'resource'
+      }
+    ],
     lessons: [
       {
         id: 'crypto-visual-1',
@@ -250,6 +304,26 @@ To fix this, developers created **Layer 2 (L2)** networks. Think of Ethereum (La
     color: 'bg-slate-700',
     xpReward: 100,
     estimatedMinutes: 15,
+    resourceLinks: [
+      {
+        title: 'Open a Robinhood Account',
+        url: 'https://robinhood.com/signup',
+        description: 'Start investing with commission-free trades and a user-friendly mobile app.',
+        category: 'account'
+      },
+      {
+        title: 'Charles Schwab Account',
+        url: 'https://www.schwab.com/open-an-account',
+        description: 'Open an account with Charles Schwab for advanced trading tools and research.',
+        category: 'account'
+      },
+      {
+        title: 'Investopedia Stock Market Guide',
+        url: 'https://www.investopedia.com/stock-market-4689660',
+        description: 'Learn the fundamentals of stock market investing.',
+        category: 'literacy'
+      }
+    ],
     lessons: [
       {
         id: 'schwab-visual',
@@ -346,6 +420,26 @@ This system democratized access to the markets, but critics argue it can result 
     color: 'bg-teal-600',
     xpReward: 80,
     estimatedMinutes: 12,
+    resourceLinks: [
+      {
+        title: 'Chime Banking',
+        url: 'https://www.chime.com/',
+        description: 'Open a fee-free mobile banking account with early direct deposit.',
+        category: 'account'
+      },
+      {
+        title: 'SoFi Money',
+        url: 'https://www.sofi.com/banking/',
+        description: 'Banking with competitive APY and no account fees.',
+        category: 'account'
+      },
+      {
+        title: 'MyMoney.gov - Financial Education',
+        url: 'https://www.mymoney.gov/',
+        description: 'Government resource for financial literacy and money management.',
+        category: 'literacy'
+      }
+    ],
     lessons: [
       {
         id: 'neobank-visual',
@@ -422,6 +516,26 @@ This system democratized access to the markets, but critics argue it can result 
     color: 'bg-emerald-600',
     xpReward: 150,
     estimatedMinutes: 25,
+    resourceLinks: [
+      {
+        title: 'Open an Alpaca Account',
+        url: 'https://alpaca.markets/signup',
+        description: 'Create a free paper trading account to build and test algorithmic trading strategies.',
+        category: 'account'
+      },
+      {
+        title: 'Alpaca API Documentation',
+        url: 'https://docs.alpaca.markets/',
+        description: 'Learn how to use Alpaca\'s REST API and WebSocket for algorithmic trading.',
+        category: 'resource'
+      },
+      {
+        title: 'QuantConnect Education',
+        url: 'https://www.quantconnect.com/learning',
+        description: 'Free courses on algorithmic trading strategies and quantitative finance.',
+        category: 'literacy'
+      }
+    ],
     lessons: [
       {
         id: 'alpaca-visual',
@@ -533,6 +647,26 @@ alpaca.createOrder({
     color: 'bg-indigo-500',
     xpReward: 120,
     estimatedMinutes: 20,
+    resourceLinks: [
+      {
+        title: 'Stripe Developer Account',
+        url: 'https://dashboard.stripe.com/register',
+        description: 'Create a free Stripe account to test payment integrations in sandbox mode.',
+        category: 'account'
+      },
+      {
+        title: 'Stripe Documentation',
+        url: 'https://stripe.com/docs',
+        description: 'Comprehensive guides for integrating payment processing into your applications.',
+        category: 'resource'
+      },
+      {
+        title: 'PCI Compliance Guide',
+        url: 'https://www.pcisecuritystandards.org/merchants/',
+        description: 'Learn about payment card industry security standards.',
+        category: 'literacy'
+      }
+    ],
     lessons: [
       {
         id: 'stripe-visual',
@@ -621,6 +755,26 @@ res.json({ clientSecret: paymentIntent.client_secret });
     color: 'bg-cyan-600',
     xpReward: 120,
     estimatedMinutes: 18,
+    resourceLinks: [
+      {
+        title: 'Plaid Developer Account',
+        url: 'https://dashboard.plaid.com/signup',
+        description: 'Create a free developer account to explore Plaid\'s bank connectivity APIs.',
+        category: 'account'
+      },
+      {
+        title: 'Plaid Documentation',
+        url: 'https://plaid.com/docs/',
+        description: 'Learn how to integrate bank account connectivity into your applications.',
+        category: 'resource'
+      },
+      {
+        title: 'Open Banking Explained',
+        url: 'https://www.consumerfinance.gov/consumer-tools/bank-accounts/',
+        description: 'CFPB resource on consumer rights in open banking.',
+        category: 'literacy'
+      }
+    ],
     lessons: [
       {
         id: 'plaid-visual',
@@ -697,6 +851,32 @@ res.json({ clientSecret: paymentIntent.client_secret });
     color: 'bg-purple-600',
     xpReward: 200,
     estimatedMinutes: 30,
+    resourceLinks: [
+      {
+        title: 'MetaMask Wallet',
+        url: 'https://metamask.io/',
+        description: 'Create a crypto wallet to interact with DeFi protocols and dApps.',
+        category: 'account'
+      },
+      {
+        title: 'Uniswap Protocol',
+        url: 'https://app.uniswap.org/',
+        description: 'Experience the leading decentralized exchange and liquidity protocol.',
+        category: 'tool'
+      },
+      {
+        title: 'Solidity Documentation',
+        url: 'https://docs.soliditylang.org/',
+        description: 'Learn Solidity, the programming language for Ethereum smart contracts.',
+        category: 'resource'
+      },
+      {
+        title: 'DeFi Safety Guide',
+        url: 'https://ethereum.org/en/defi/',
+        description: 'Ethereum.org\'s comprehensive guide to DeFi risks and best practices.',
+        category: 'literacy'
+      }
+    ],
     lessons: [
       {
         id: 'defi-visual',
@@ -786,6 +966,26 @@ Because DeFi protocols hold billions of dollars and are completely open-source, 
     color: 'bg-red-600',
     xpReward: 200,
     estimatedMinutes: 25,
+    resourceLinks: [
+      {
+        title: 'QuantLib Library',
+        url: 'https://www.quantlib.org/',
+        description: 'Open-source library for quantitative finance and derivatives pricing.',
+        category: 'tool'
+      },
+      {
+        title: 'CME Group Market Data',
+        url: 'https://www.cmegroup.com/market-data.html',
+        description: 'Explore real-time and historical market data from the world\'s largest derivatives marketplace.',
+        category: 'resource'
+      },
+      {
+        title: 'Flash Boys (Book)',
+        url: 'https://www.penguinrandomhouse.com/books/220880/flash-boys-by-michael-lewis/',
+        description: 'Michael Lewis\'s investigation into high-frequency trading.',
+        category: 'literacy'
+      }
+    ],
     lessons: [
       {
         id: 'hft-visual',
@@ -854,6 +1054,32 @@ To win, HFT firms use two primary strategies:
     color: 'bg-amber-500',
     xpReward: 250,
     estimatedMinutes: 30,
+    resourceLinks: [
+      {
+        title: 'Betterment Robo-Advisor',
+        url: 'https://www.betterment.com/',
+        description: 'Experience AI-driven automated investing and wealth management.',
+        category: 'account'
+      },
+      {
+        title: 'TensorFlow Finance Examples',
+        url: 'https://www.tensorflow.org/tutorials',
+        description: 'Learn how to build machine learning models for financial applications.',
+        category: 'resource'
+      },
+      {
+        title: 'Kaggle Finance Datasets',
+        url: 'https://www.kaggle.com/datasets?tags=13207-Finance',
+        description: 'Practice ML on real financial datasets and competitions.',
+        category: 'tool'
+      },
+      {
+        title: 'AI Ethics in Finance',
+        url: 'https://www.imf.org/en/Publications/fintech-notes',
+        description: 'IMF research on artificial intelligence and financial services.',
+        category: 'literacy'
+      }
+    ],
     lessons: [
       {
         id: 'ai-visual',
