@@ -13,25 +13,26 @@ const Alpaca = require('@alpacahq/alpaca-trade-api');
 const alpaca = new Alpaca({ paper: true });
 
 async function run() {
-  console.log("Starting MA Crossover Bot...");
+  // Log to bot console
+  logMessage("Starting MA Crossover Bot...");
   const symbol = 'AAPL';
-  
+
   // Fetch historical data
   const bars = await alpaca.getBarsV2(symbol, {
     timeframe: '1Day',
     limit: 50
   });
-  
+
   const shortMA = calculateMA(bars, 10);
   const longMA = calculateMA(bars, 50);
-  
+
   if (shortMA > longMA) {
-    console.log("Golden Cross detected! Buying...");
+    logMessage("Golden Cross detected! Buying...");
     await alpaca.createOrder({
       symbol, qty: 10, side: 'buy', type: 'market'
     });
   } else {
-    console.log("Death Cross detected! Selling...");
+    logMessage("Death Cross detected! Selling...");
     await alpaca.closePosition(symbol);
   }
 }`,
@@ -40,21 +41,21 @@ const Alpaca = require('@alpacahq/alpaca-trade-api');
 const alpaca = new Alpaca({ paper: true });
 
 async function run() {
-  console.log("Starting Mean Reversion Bot...");
+  logMessage("Starting Mean Reversion Bot...");
   const symbol = 'TSLA';
-  
+
   const currentPrice = await alpaca.getLatestTrade(symbol);
   const averagePrice = await getAveragePrice(symbol, 20);
-  
+
   const deviation = (currentPrice - averagePrice) / averagePrice;
-  
+
   if (deviation < -0.05) {
-    console.log("Price dropped 5% below average. Buying the dip!");
+    logMessage("Price dropped 5% below average. Buying the dip!");
     await alpaca.createOrder({
       symbol, qty: 5, side: 'buy', type: 'market'
     });
   } else if (deviation > 0.05) {
-    console.log("Price rose 5% above average. Taking profits!");
+    logMessage("Price rose 5% above average. Taking profits!");
     await alpaca.createOrder({
       symbol, qty: 5, side: 'sell', type: 'market'
     });
@@ -79,19 +80,20 @@ export function AlpacaSimulator({ onComplete }: AlpacaSimulatorProps) {
 
     const interval = setInterval(() => {
       step++;
-      
+
       // Generate mock logs
       if (step === 2) setLogs(l => [...l, 'Authentication successful.']);
       if (step === 3) setLogs(l => [...l, `Running ${strategy === 'movingAverage' ? 'MA Crossover' : 'Mean Reversion'}...`]);
-      
+
       if (step > 3 && step < maxSteps) {
         const action = Math.random() > 0.7 ? (Math.random() > 0.5 ? 'BUY' : 'SELL') : 'HOLD';
         if (action !== 'HOLD') {
-          setLogs(l => [...l, `[${new Date().toISOString().split('T')[1].split('.')[0]}] Executed ${action} order.`]);
+          const timestamp = new Date().toISOString().split('T')[1].split('.')[0];
+          setLogs(l => [...l, `[${timestamp}] Executed ${action} order.`]);
         }
-        
+
         // Random walk for P&L
-        currentPnl += (Math.random() - 0.45) * 50; 
+        currentPnl += (Math.random() - 0.45) * 50;
         setPnlData(prev => [...prev, { day: step, pnl: currentPnl }]);
       }
 
@@ -101,6 +103,9 @@ export function AlpacaSimulator({ onComplete }: AlpacaSimulatorProps) {
         setLogs(l => [...l, 'Simulation complete.', `Final P&L: $${currentPnl.toFixed(2)}`]);
       }
     }, 400);
+
+    // Return cleanup function to prevent memory leaks
+    return () => clearInterval(interval);
   };
 
   return (

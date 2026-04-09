@@ -46,7 +46,7 @@ export function CoinbaseSimulator({ onComplete }: CoinbaseSimulatorProps) {
   const handleBuy = () => {
     const amount = parseFloat(tradeAmount);
     if (isNaN(amount) || amount <= 0) {
-      setMessage('Please enter a valid amount.');
+      setMessage('Please enter a valid positive amount.');
       return;
     }
     if (amount > usdBalance) {
@@ -57,14 +57,14 @@ export function CoinbaseSimulator({ onComplete }: CoinbaseSimulatorProps) {
     const btcBought = amount / currentPrice;
     setUsdBalance(prev => prev - amount);
     setBtcBalance(prev => prev + btcBought);
-    setMessage(`Successfully bought ${btcBought.toFixed(4)} BTC for $${amount.toFixed(2)}`);
+    setMessage(`Successfully bought ${btcBought.toFixed(6)} BTC for $${amount.toFixed(2)}`);
     setTradeAmount('');
   };
 
   const handleSell = () => {
     const amountBtc = parseFloat(tradeAmount);
     if (isNaN(amountBtc) || amountBtc <= 0) {
-      setMessage('Please enter a valid BTC amount.');
+      setMessage('Please enter a valid positive BTC amount.');
       return;
     }
     if (amountBtc > btcBalance) {
@@ -75,7 +75,7 @@ export function CoinbaseSimulator({ onComplete }: CoinbaseSimulatorProps) {
     const usdGained = amountBtc * currentPrice;
     setBtcBalance(prev => prev - amountBtc);
     setUsdBalance(prev => prev + usdGained);
-    setMessage(`Successfully sold ${amountBtc.toFixed(4)} BTC for $${usdGained.toFixed(2)}`);
+    setMessage(`Successfully sold ${amountBtc.toFixed(6)} BTC for $${usdGained.toFixed(2)}`);
     setTradeAmount('');
   };
 
@@ -171,12 +171,15 @@ export function CoinbaseSimulator({ onComplete }: CoinbaseSimulatorProps) {
             <div>
               <label className="block text-sm font-semibold text-slate-700 mb-2">Amount</label>
               <div className="relative">
-                <input 
-                  type="number" 
+                <input
+                  type="number"
                   value={tradeAmount}
                   onChange={(e) => setTradeAmount(e.target.value)}
                   placeholder="0.00"
+                  min="0"
+                  step="0.000001"
                   className="w-full pl-4 pr-12 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-mono text-lg"
+                  aria-label="Trade amount"
                 />
               </div>
             </div>

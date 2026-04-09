@@ -38,10 +38,12 @@ export function Dashboard({ modules, completedModules, onSelectModule, activeLev
               onClick={() => onSelectLevel(level.id)}
               className={cn(
                 "px-6 py-2.5 rounded-lg font-semibold text-sm transition-all",
-                activeLevel === level.id 
-                  ? "bg-white text-slate-900 shadow-sm" 
+                activeLevel === level.id
+                  ? "bg-white text-slate-900 shadow-sm"
                   : "text-slate-600 hover:text-slate-900"
               )}
+              aria-label={`Select ${level.label} level`}
+              aria-pressed={activeLevel === level.id}
             >
               {level.label}
             </button>
@@ -60,11 +62,20 @@ export function Dashboard({ modules, completedModules, onSelectModule, activeLev
               whileHover={isUnlocked ? { y: -4 } : {}}
               className={cn(
                 "relative rounded-2xl p-6 cursor-pointer border transition-all",
-                isUnlocked 
-                  ? "bg-white border-slate-200 hover:border-blue-300 hover:shadow-lg shadow-sm" 
+                isUnlocked
+                  ? "bg-white border-slate-200 hover:border-blue-300 hover:shadow-lg shadow-sm"
                   : "bg-slate-50 border-slate-200 opacity-75 cursor-not-allowed"
               )}
               onClick={() => isUnlocked && onSelectModule(module.id)}
+              role="button"
+              tabIndex={isUnlocked ? 0 : -1}
+              onKeyDown={(e) => {
+                if (isUnlocked && (e.key === 'Enter' || e.key === ' ')) {
+                  e.preventDefault();
+                  onSelectModule(module.id);
+                }
+              }}
+              aria-label={`${module.title} module${isCompleted ? ', completed' : isUnlocked ? '' : ', locked'}`}
             >
               <div className={cn(
                 "w-14 h-14 rounded-xl flex items-center justify-center mb-5 text-white shadow-sm",
