@@ -5,6 +5,8 @@ import { Quiz } from './Quiz';
 import { TradingGame } from './TradingGame';
 import { CoinbaseSimulator } from './CoinbaseSimulator';
 import { AlpacaSimulator } from './AlpacaSimulator';
+import VisualLesson from './VisualLesson';
+import { ResourceLinks } from './ResourceLinks';
 import { ArrowLeft, ArrowRight, CheckCircle2, BookOpen, Gamepad2, PlayCircle } from 'lucide-react';
 import Markdown from 'react-markdown';
 
@@ -140,16 +142,27 @@ export function ModuleView({ module, onBack, onComplete }: ModuleViewProps) {
             <Quiz questions={currentLesson.quiz} onComplete={handleQuizComplete} />
           )}
 
+          {currentLesson.type === 'visual' && currentLesson.visualSteps && (
+            <div className="bg-slate-900 rounded-2xl p-8 shadow-sm">
+              <VisualLesson steps={currentLesson.visualSteps} onComplete={handleNext} />
+            </div>
+          )}
+
           {currentLesson.type === 'game' && currentLesson.gameType === 'trading' && (
             <TradingGame onComplete={handleGameComplete} />
           )}
-          
+
           {currentLesson.type === 'game' && currentLesson.gameType === 'coinbase' && (
             <CoinbaseSimulator onComplete={handleGameComplete} />
           )}
 
           {currentLesson.type === 'game' && currentLesson.gameType === 'alpaca' && (
             <AlpacaSimulator onComplete={handleGameComplete} />
+          )}
+
+          {/* Show resource links on the last lesson */}
+          {isLastLesson && module.resourceLinks && module.resourceLinks.length > 0 && (
+            <ResourceLinks resources={module.resourceLinks} moduleTitle={module.title} />
           )}
 
         </motion.div>
