@@ -97,6 +97,7 @@ export function TradingGame({ onComplete }: TradingGameProps) {
                 onClick={buyToken}
                 disabled={money < tokenPrice}
                 className="flex-1 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white py-3 rounded-lg font-semibold shadow-sm transition-colors"
+                aria-label={`Buy 1 token for $${tokenPrice}`}
               >
                 Buy (1 TKN)
               </button>
@@ -104,6 +105,7 @@ export function TradingGame({ onComplete }: TradingGameProps) {
                 onClick={sellToken}
                 disabled={tokens === 0}
                 className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white py-3 rounded-lg font-semibold shadow-sm transition-colors"
+                aria-label={`Sell 1 token for $${tokenPrice}`}
               >
                 Sell (1 TKN)
               </button>

@@ -83,11 +83,14 @@ export function Quiz({ questions, onComplete }: QuizProps) {
                 className={btnClass}
                 onClick={() => handleSelect(index)}
                 disabled={selectedAnswer !== null}
+                aria-label={`Option ${index + 1}: ${option}`}
+                aria-pressed={isSelected}
+                aria-describedby={isActuallyCorrect && selectedAnswer !== null ? 'correct-answer' : undefined}
               >
                 <div className="flex items-center justify-between">
                   <span>{option}</span>
-                  {selectedAnswer !== null && isActuallyCorrect && <CheckCircle2 className="text-emerald-500 w-5 h-5" />}
-                  {isSelected && !isActuallyCorrect && <XCircle className="text-red-500 w-5 h-5" />}
+                  {selectedAnswer !== null && isActuallyCorrect && <CheckCircle2 className="text-emerald-500 w-5 h-5" aria-hidden="true" />}
+                  {isSelected && !isActuallyCorrect && <XCircle className="text-red-500 w-5 h-5" aria-hidden="true" />}
                 </div>
               </button>
             );
